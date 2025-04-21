@@ -3,14 +3,14 @@ import driver
 import gleam/javascript/promise.{await}
 import gleeunit
 import gleeunit/should
-import timeout.{Implicit}
+import timeout
 import webelement
 
 pub fn main() {
   gleeunit.main()
 }
 
-const selenium_url = "https://www.selenium.dev/selenium/web/web-form.html"
+pub const selenium_url = "https://www.selenium.dev/selenium/web/web-form.html"
 
 pub fn example_test() {
   // 1. Start the webdriver
@@ -24,7 +24,7 @@ pub fn example_test() {
   title |> should.equal("Web form")
 
   // 4. Establish Waiting Strategy
-  use _ <- await(driver |> driver.set_timeouts([Implicit(500)]))
+  use _ <- await(driver |> driver.set_timeouts([timeout.Implicit(500)]))
 
   // 5. Find an element
   use text_box <- await(driver |> driver.find_element(by.name("my-text")))

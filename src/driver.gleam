@@ -1,5 +1,6 @@
 import by.{type Locator}
 import gleam/dict.{type Dict}
+import gleam/dynamic/decode.{type Dynamic}
 import gleam/javascript/promise.{type Promise}
 import timeout.{type Timeout}
 import webelement.{type WebElement}
@@ -62,9 +63,12 @@ pub fn get_title(driver: Driver) -> Promise(String) {
 
 /// `await driver.setTimeouts(timeouts)`
 pub fn set_timeouts(driver: Driver, timeouts: List(Timeout)) -> Promise(Nil) {
-  timeouts
-  |> timeout.timeouts()
+  timeout.from(timeouts)
   |> do_set_timeouts(driver, _)
+}
+
+pub fn get_timeouts(driver: Driver) {
+  do_get_timeouts(driver)
 }
 
 @external(javascript, "./ffi/driver.mjs", "getDriver")
@@ -93,3 +97,6 @@ fn do_get_title(driver: Driver) -> Promise(String)
 
 @external(javascript, "./ffi/driver.mjs", "setTimeouts")
 fn do_set_timeouts(driver: Driver, timeouts: Dict(String, Int)) -> Promise(Nil)
+
+@external(javascript, "./ffi/driver.mjs", "getTimeouts")
+fn do_get_timeouts(driver: Driver) -> Promise(Dynamic)
