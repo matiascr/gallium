@@ -21,5 +21,3 @@ export async function getText(element) {
 export async function clear(element) {
   return await element.clear();
 }
-
-
