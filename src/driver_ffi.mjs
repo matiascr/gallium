@@ -1,11 +1,10 @@
-import { Builder, Browser } from 'selenium-webdriver';
+import { Builder, Browser } from "selenium-webdriver";
 
 // These lines make "require" available
 import { createRequire } from "module";
 const require = createRequire(import.meta.url);
 
-const chrome = require('selenium-webdriver/chrome');
-
+const chrome = require("selenium-webdriver/chrome");
 
 export async function getDriver() {
   let driver = new Builder()
@@ -21,7 +20,6 @@ export async function getDriverForBrowser(browser) {
   return driver;
 }
 
-
 export async function get(driver, url) {
   await driver.get(url);
 }
@@ -35,7 +33,7 @@ export async function findElement(driver, locator) {
 }
 
 export async function findElements(driver, locator) {
-  return driver.findElements(locator);
+  return await driver.findElements(locator);
 }
 
 export async function getTitle(driver) {
