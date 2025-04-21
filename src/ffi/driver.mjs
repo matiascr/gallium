@@ -43,3 +43,7 @@ export async function getTitle(driver) {
 export async function setTimeouts(driver, timeouts) {
   await driver.manage().setTimeouts(timeouts);
 }
+
+export async function getTimeouts(driver) {
+  return await driver.manage().getTimeouts();
+}

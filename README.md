@@ -15,7 +15,7 @@ import gallium/driver.{Chrome}
 import gleam/javascript/promise.{await}
 import gleeunit
 import gleeunit/should
-import gallium/timeout.{Implicit}
+import gallium/timeout
 import gallium/webelement
 
 pub fn main() {
@@ -36,7 +36,7 @@ pub fn example_test() {
   title |> should.equal("Web form")
 
   // 4. Establish Waiting Strategy
-  use _ <- await(driver |> driver.set_timeouts([Implicit(500)]))
+  use _ <- await(driver |> driver.set_timeouts([timeout.Implicit(500)]))
 
   // 5. Find an element
   use text_box <- await(driver |> driver.find_element(by.name("my-text")))
