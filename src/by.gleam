@@ -6,36 +6,36 @@ pub type Locator {
 }
 
 /// Returns the `By.className(String)` locator
-@external(javascript, "./by_ffi.mjs", "className")
+@external(javascript, "./ffi/by.mjs", "className")
 pub fn class_name(class_name: String) -> Locator
 
 /// Returns the `By.css(String)` locator
-@external(javascript, "./by_ffi.mjs", "css")
+@external(javascript, "./ffi/by.mjs", "css")
 pub fn css(css: String) -> Locator
 
 /// Returns the `By.id(String)` locator
-@external(javascript, "./by_ffi.mjs", "id")
+@external(javascript, "./ffi/by.mjs", "id")
 pub fn id(id: String) -> Locator
 
 /// Returns the `By.name(String)` locator
-@external(javascript, "./by_ffi.mjs", "name")
+@external(javascript, "./ffi/by.mjs", "name")
 pub fn name(name: String) -> Locator
 
 /// Returns the `By.linkText(String)` locator
-@external(javascript, "./by_ffi.mjs", "linkText")
+@external(javascript, "./ffi/by.mjs", "linkText")
 pub fn link_text(link_text: String) -> Locator
 
 /// Returns the `By.partialLinkText(String)` locator
-@external(javascript, "./by_ffi.mjs", "partialLinkText")
+@external(javascript, "./ffi/by.mjs", "partialLinkText")
 pub fn partial_link_text(partial_link_text: String) -> Locator
 
 /// Returns the `By.tagName(String)` locator
 @deprecated("Use By.css(tagName) instead.")
-@external(javascript, "./by_ffi.mjs", "tagName")
+@external(javascript, "./ffi/by.mjs", "tagName")
 pub fn tag_name(tag_name: String) -> Locator
 
 /// Returns the `By.xpath(String)` locator
-@external(javascript, "./by_ffi.mjs", "xpath")
+@external(javascript, "./ffi/by.mjs", "xpath")
 pub fn xpath(xpath: String) -> Locator
 
 pub fn decode(locator: Locator) -> Result(Locator, List(DecodeError)) {
