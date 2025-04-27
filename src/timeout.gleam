@@ -23,5 +23,5 @@ pub fn timeouts(timeouts) -> timeouts {
   |> do_timeouts()
 }
 
-@external(javascript, "./timeout_ffi.mjs", "timeouts")
+@external(javascript, "./ffi/timeout.mjs", "timeouts")
 fn do_timeouts(timeouts: Dict(String, Int)) -> timeouts
