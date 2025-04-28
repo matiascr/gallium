@@ -6,7 +6,7 @@ description = "Selenium bindings for Gleam"
 repository = { type = "github", user = "matiascr", repo = "gallium" }
 
 [javascript]
-typescript_definitions = true
+typescript_declarations = true
 
 [dependencies]
 gleam_stdlib = ">= 0.44.0 and < 2.0.0"
