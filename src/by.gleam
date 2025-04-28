@@ -12,21 +12,21 @@ import pprint
 
 /// Describes a mechanism for locating an element on the page.
 pub type Locator {
-  /// The `By.className(String)` locator type
+  /// The `By.className(value)` locator type
   ClassName(String)
-  /// The `By.css(String)` locator type
+  /// The `By.css(value)` locator type
   Css(String)
-  /// The `By.id(String)` locator type
+  /// The `By.id(value)` locator type
   Id(String)
-  /// The `By.name(String)` locator type
+  /// The `By.name(value)` locator type
   Name(String)
-  /// The `By.lintText(String)` locator type
+  /// The `By.lintText(value)` locator type
   LinkText(String)
-  /// The `By.partialLinkText(String)` locator type
+  /// The `By.partialLinkText(value)` locator type
   PartialLinkText(String)
-  /// The `By.tagName(String)` locator type
+  /// The `By.tagName(value)` locator type
   TagName(String)
-  /// The `By.xpath(String)` locator type
+  /// The `By.xpath(value)` locator type
   XPath(String)
 }
 
@@ -37,6 +37,7 @@ pub type Locator {
 /// Returns the equivalent of the `By.className(String)` locator in JavaScript.
 ///
 /// ## Example
+///
 /// ```gleam
 /// let driver = driver.get_default_driver()
 /// use _ <- promise.await(driver |> driver.get(url))
