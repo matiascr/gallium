@@ -1,32 +1,15 @@
-# Gallium
-
-Selenium bindings for Gleam
-
-```sh
-gleam add gallium@1
-npm install selenium-webdriver
-```
-
-The following is an example of Gallium being used within Gleeunit:
-
-```gleam
-import gallium/by
-import gallium/driver.{Chrome}
-import gallium/driver/timeout
-import gallium/webelement
+import by
+import driver
+import driver/timeout
 import gleam/javascript/promise.{await}
-import gleeunit
 import gleeunit/should
-
-pub fn main() {
-  gleeunit.main()
-}
+import webelement
 
 const selenium_url = "https://www.selenium.dev/selenium/web/web-form.html"
 
 pub fn example_test() {
   // 1. Start the webdriver
-  use driver <- await(driver.get_driver_for_browser(Chrome))
+  use driver <- await(driver.get_default_driver())
 
   // 2. Take action on browser
   use _ <- await(driver |> driver.get(selenium_url))
@@ -54,11 +37,3 @@ pub fn example_test() {
   // 8. End the session
   driver |> driver.quit()
 }
-```
-
-## Development
-
-```sh
-gleam test # Run the tests
-```
-
