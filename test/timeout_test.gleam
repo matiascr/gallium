@@ -7,6 +7,12 @@ import gleeunit/should
 
 const selenium_url = "https://www.selenium.dev/selenium/web/web-form.html"
 
+const default_implicit_value = #("implicit", 0)
+
+const default_page_load_value = #("pageLoad", 300_000)
+
+const default_script_value = #("script", 30_000)
+
 pub fn implicit_timeout_test() {
   let test_value = 44
 
@@ -15,8 +21,8 @@ pub fn implicit_timeout_test() {
   |> should.equal(
     dict.from_list([
       #("implicit", test_value),
-      #("pageLoad", 300_000),
-      #("script", 30_000),
+      default_page_load_value,
+      default_script_value,
     ]),
   )
 }
@@ -28,9 +34,9 @@ pub fn page_load_timeout_test() {
   decode(timeouts)
   |> should.equal(
     dict.from_list([
-      #("implicit", 0),
+      default_implicit_value,
       #("pageLoad", test_value),
-      #("script", 30_000),
+      default_script_value,
     ]),
   )
 }
@@ -42,8 +48,8 @@ pub fn script_timeout_test() {
   decode(timeouts)
   |> should.equal(
     dict.from_list([
-      #("implicit", 0),
-      #("pageLoad", 300_000),
+      default_implicit_value,
+      default_page_load_value,
       #("script", test_value),
     ]),
   )
