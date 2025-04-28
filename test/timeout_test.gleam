@@ -1,15 +1,11 @@
 import driver
-import gallium_test
+import driver/timeout.{type Timeout}
 import gleam/dict.{type Dict}
 import gleam/dynamic/decode.{type Dynamic}
 import gleam/javascript/promise
-import gleeunit
 import gleeunit/should
-import timeout.{type Timeout}
 
-pub fn main() {
-  gleeunit.main()
-}
+const selenium_url = "https://www.selenium.dev/selenium/web/web-form.html"
 
 pub fn implicit_timeout_test() {
   let test_value = 44
@@ -56,8 +52,7 @@ pub fn script_timeout_test() {
 /// Starts the webdriver for the tests
 fn setup_driver(timeout: List(Timeout), test_case) {
   use driver <- promise.await(driver.get_default_driver())
-  use _ <- promise.await(driver |> driver.get(gallium_test.selenium_url))
-  use driver <- promise.await(driver.get_default_driver())
+  use _ <- promise.await(driver |> driver.get(selenium_url))
   use _ <- promise.await(driver |> driver.set_timeouts(timeout))
   use timeouts <- promise.await(driver |> driver.get_timeouts())
   use _ <- promise.await(driver.quit(driver))

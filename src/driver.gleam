@@ -1,8 +1,8 @@
 import by.{type Locator}
+import driver/timeout.{type Timeout}
 import gleam/dict.{type Dict}
 import gleam/dynamic/decode.{type Dynamic}
 import gleam/javascript/promise.{type Promise}
-import timeout.{type Timeout}
 import webelement.{type WebElement}
 
 pub type WebDriver

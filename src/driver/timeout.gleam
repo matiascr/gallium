@@ -39,5 +39,5 @@ pub fn from(timeouts: List(Timeout)) -> Timeouts {
 
 // FFIs ========================================================================
 
-@external(javascript, "./ffi/timeout.mjs", "timeouts")
+@external(javascript, "../ffi/timeout.mjs", "timeouts")
 fn do_timeouts(timeouts: Timeouts) -> Timeouts
