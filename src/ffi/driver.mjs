@@ -6,10 +6,21 @@ const require = createRequire(import.meta.url);
 
 const chrome = require("selenium-webdriver/chrome");
 
-export async function getDriver() {
+export async function getDriver(args) {
+  let options = new chrome.Options();
   let driver = new Builder()
     .forBrowser(Browser.CHROME)
-    .setChromeOptions(new chrome.Options().headless)
+    .setChromeOptions(options.addArguments(args))
+    .build();
+
+  return driver;
+}
+
+export async function getDefaultDriver() {
+  let options = new chrome.Options();
+  let driver = new Builder()
+    .forBrowser(Browser.CHROME)
+    .setChromeOptions(options.addArguments("--headless"))
     .build();
 
   return driver;
@@ -46,4 +57,8 @@ export async function setTimeouts(driver, timeouts) {
 
 export async function getTimeouts(driver) {
   return await driver.manage().getTimeouts();
+}
+
+export async function getBrowserName(driver) {
+  return await driver.getB;
 }

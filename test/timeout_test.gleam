@@ -55,8 +55,9 @@ pub fn script_timeout_test() {
 
 /// Starts the webdriver for the tests
 fn setup_driver(timeout: List(Timeout), test_case) {
-  use driver <- promise.await(driver.get_driver())
+  use driver <- promise.await(driver.get_default_driver())
   use _ <- promise.await(driver |> driver.get(gallium_test.selenium_url))
+  use driver <- promise.await(driver.get_default_driver())
   use _ <- promise.await(driver |> driver.set_timeouts(timeout))
   use timeouts <- promise.await(driver |> driver.get_timeouts())
   use _ <- promise.await(driver.quit(driver))

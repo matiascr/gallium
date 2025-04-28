@@ -14,7 +14,7 @@ pub const selenium_url = "https://www.selenium.dev/selenium/web/web-form.html"
 
 pub fn example_test() {
   // 1. Start the webdriver
-  use driver <- await(driver.get_driver())
+  use driver <- await(driver.get_default_driver())
 
   // 2. Take action on browser
   use _ <- await(driver |> driver.get(selenium_url))
