@@ -1,4 +1,6 @@
-//// Timeouts
+//// This module lets you create timeouts usable by [WebDriver](../driver.html) from the supported
+//// variants.
+//// 
 
 import gleam/dict.{type Dict}
 import gleam/list
