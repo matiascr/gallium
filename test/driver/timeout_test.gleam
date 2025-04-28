@@ -1,9 +1,9 @@
-import driver
-import driver/timeout.{type Timeout}
 import gleam/dict.{type Dict}
 import gleam/dynamic/decode.{type Dynamic}
 import gleam/javascript/promise
 import gleeunit/should
+import webdriver
+import webdriver/timeout.{type Timeout}
 
 const selenium_url = "https://www.selenium.dev/selenium/web/web-form.html"
 
@@ -55,15 +55,19 @@ pub fn script_timeout_test() {
   )
 }
 
+// Helpers =====================================================================
+
 /// Starts the webdriver for the tests
 fn setup_driver(timeout: List(Timeout), test_case) {
-  use driver <- promise.await(driver.get_default_driver())
-  use _ <- promise.await(driver |> driver.get(selenium_url))
-  use _ <- promise.await(driver |> driver.set_timeouts(timeout))
-  use timeouts <- promise.await(driver |> driver.get_timeouts())
-  use _ <- promise.await(driver.quit(driver))
+  let driver = webdriver.get_driver(webdriver.Chrome, "--headless")
+  let assert Ok(driver) = driver
+  use _ <- promise.try_await(driver |> webdriver.get(selenium_url))
+  use _ <- promise.try_await(driver |> webdriver.set_timeouts(timeout))
+  use timeouts <- promise.try_await(driver |> webdriver.get_timeouts())
+  use _ <- promise.try_await(webdriver.quit(driver))
   test_case(timeouts)
-  promise.resolve(Nil)
+  |> Ok
+  |> promise.resolve
 }
 
 fn decode(js_dict: Dynamic) -> Dict(String, Int) {
