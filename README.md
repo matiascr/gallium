@@ -4,8 +4,14 @@ Selenium bindings for Gleam
 
 ```sh
 gleam add gallium@1
+
+# Install dependencies
 npm install selenium-webdriver
+# or
+bun install selenium-webdriver
 ```
+
+_Note: the current version of Gallium does **NOT** work on the `deno` runtime._
 
 The following is an example of Gallium being used within Gleeunit:
 
@@ -65,4 +71,5 @@ pub fn example_test() {
 ```sh
 gleam test # Run the tests
 ```
+_Note: Using the `nodejs` runtime to run `gleam test` can lead to memory errors, so it is recommended to use `bun`._
 
