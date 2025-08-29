@@ -35,10 +35,6 @@ export async function getId(element) {
   return await element.getId().then(okRet).catch(err);
 }
 
-export async function getSize(element) {
-  return await element.getSize().then(okRet).catch(err);
-}
-
 export async function getAttribute(element, attributeName) {
   return await element.getAttribute(attributeName).then(okRet).catch(err);
 }

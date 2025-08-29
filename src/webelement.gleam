@@ -1,6 +1,7 @@
 //// Functions for working with [`WebElements`](#WebElement).
 
 import error.{type Error}
+import gleam/dynamic/decode.{type Dynamic}
 import gleam/javascript/promise.{type Promise}
 import gleam/option.{type Option}
 import input/key.{type Keys}
@@ -40,20 +41,13 @@ import locator.{type Locator}
 /// ```
 pub type WebElement
 
-/// An element's bounding box, in pixels.
-pub type Size {
-  Size(width: Int, height: Int)
-}
+type JSRect =
+  Dynamic
 
 /// Describes an element location, in pixels relative to
 /// the document element, and the element's size in pixels.
 pub type Rect {
-  Rect(x: Int, y: Int, width: Int, height: Int)
-}
-
-/// Relative to the top left corner of the screen.
-pub type Location {
-  Location(x: Int, y: Int)
+  Rect(x: Float, y: Float, width: Int, height: Int)
 }
 
 // Values =========================================================================================
@@ -116,13 +110,6 @@ pub fn get_id(element) {
   do_get_id(element)
 }
 
-/// Schedules a command to compute the size of this element's bounding box, in
-/// pixels.
-@deprecated("Deprecated from Selenium >=3.0")
-pub fn get_size(element) {
-  do_get_size(element)
-}
-
 /// Schedules a command to query for the value of the given attribute of the
 /// element. Will return the current value, even if it has been modified after
 /// the page has been loaded. More exactly, this method will return the value
@@ -148,16 +135,20 @@ pub fn get_attribute(element, attribute_name) {
   do_get_attribute(element, attribute_name)
 }
 
-/// Schedules a command to compute the location of this element in page space.
-@deprecated("Deprecated from Selenium >=3.0")
-pub fn get_location(element) {
-  do_get_location(element)
-}
-
 /// Returns an object describing an element's location, in pixels relative to
 /// the document element, and the element's size in pixels.
 pub fn get_rect(element) {
-  do_get_rect(element)
+  use rect <- promise.await(do_get_rect(element))
+  let assert Ok(size) = rect
+  decode.run(size, {
+    use width <- decode.field("width", decode.int)
+    use height <- decode.field("height", decode.int)
+    use x <- decode.field("x", decode.float)
+    use y <- decode.field("y", decode.float)
+    Rect(height:, width:, x:, y:)
+    |> decode.success
+  })
+  |> promise.resolve
 }
 
 /// Get the shadow root of the current web element.
@@ -301,20 +292,14 @@ fn do_get_driver(element: WebElement) -> Result(webdriver, Error)
 @external(javascript, "./ffi/webelement.mjs", "getId")
 fn do_get_id(element: WebElement) -> Promise(Result(String, Error))
 
-@external(javascript, "./ffi/webelement.mjs", "getSize")
-fn do_get_size(element: WebElement) -> Promise(Result(Size, Error))
-
 @external(javascript, "./ffi/webelement.mjs", "getAttribute")
 fn do_get_attribute(
   element: WebElement,
   attribute_name: String,
 ) -> Promise(Result(String, Error))
 
-@external(javascript, "./ffi/webelement.mjs", "getLocation")
-fn do_get_location(element: WebElement) -> Promise(Result(Location, Error))
-
 @external(javascript, "./ffi/webelement.mjs", "getRect")
-fn do_get_rect(element: WebElement) -> Promise(Result(Rect, Error))
+fn do_get_rect(element: WebElement) -> Promise(Result(JSRect, Error))
 
 @external(javascript, "./ffi/webelement.mjs", "getShadowRoot")
 fn do_get_shadow_root(
